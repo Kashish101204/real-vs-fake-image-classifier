@@ -38,104 +38,104 @@ st.set_page_config(
 )
 
 # ---------------------------
-# Cute, Soft, Aesthetic CSS Styling
+# Clean, Professional, Cute CSS with High Contrast
 # ---------------------------
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
-    /* Soft gradient background */
+    /* Soft but clear background */
     .stApp {
-        background: linear-gradient(135deg, #ffeef8 0%, #e8f4ff 50%, #fff4f0 100%);
-        font-family: 'Quicksand', sans-serif;
+        background: linear-gradient(135deg, #f8f4ff 0%, #fff9f5 100%);
+        font-family: 'Inter', sans-serif;
     }
     
-    /* Elegant title */
+    /* Strong, readable title */
     h1 {
-        color: #7c5295;
+        color: #2d1b4e;
         font-size: 2.5rem !important;
         font-weight: 700 !important;
         text-align: center;
         margin-bottom: 0.5rem !important;
-        letter-spacing: 0.02em;
+        letter-spacing: -0.02em;
     }
     
-    /* Subtitle with soft styling */
+    /* Clear subtitle */
     .subtitle {
         text-align: center;
-        color: #9b8aa6;
+        color: #5a4a6a;
         font-size: 1.05rem;
         margin-bottom: 2.5rem;
         font-weight: 500;
         line-height: 1.6;
     }
     
-    /* Soft container card */
+    /* Premium card with strong structure */
     .main-container {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(20px);
-        border-radius: 30px;
+        background: #ffffff;
+        border-radius: 24px;
         padding: 2.5rem;
-        box-shadow: 0 8px 32px rgba(124, 82, 149, 0.12),
-                    0 2px 8px rgba(124, 82, 149, 0.08);
+        box-shadow: 0 4px 24px rgba(124, 82, 149, 0.12),
+                    0 1px 4px rgba(124, 82, 149, 0.08);
         margin: 2rem auto;
-        border: 1px solid rgba(255, 255, 255, 0.8);
+        border: 2px solid #f0ebf5;
         max-width: 700px;
     }
     
-    /* Gentle file uploader */
+    /* Clear, distinct file uploader */
     .stFileUploader {
-        background: linear-gradient(135deg, #f8f0ff 0%, #fff4f9 100%);
-        border: 2.5px dashed #d4c5e0;
-        border-radius: 20px;
+        background: linear-gradient(135deg, #faf7ff 0%, #fff8fc 100%);
+        border: 3px dashed #b794d6;
+        border-radius: 16px;
         padding: 2.5rem;
         transition: all 0.3s ease;
     }
     
     .stFileUploader:hover {
-        background: linear-gradient(135deg, #f3e8ff 0%, #ffe9f5 100%);
-        border-color: #b9a5cc;
+        background: linear-gradient(135deg, #f3edff 0%, #fff0f9 100%);
+        border-color: #9371c7;
         transform: translateY(-2px);
-        box-shadow: 0 12px 24px rgba(124, 82, 149, 0.15);
+        box-shadow: 0 8px 24px rgba(124, 82, 149, 0.15);
     }
     
     .stFileUploader label {
-        color: #7c5295 !important;
+        color: #2d1b4e !important;
         font-weight: 600 !important;
-        font-size: 1rem !important;
+        font-size: 1.05rem !important;
     }
     
     .stFileUploader [data-testid="stMarkdownContainer"] {
-        color: #9b8aa6 !important;
+        color: #5a4a6a !important;
+        font-weight: 500 !important;
     }
     
-    /* Section headers */
+    /* Clear section headers */
     h3 {
-        color: #7c5295 !important;
-        font-size: 1.3rem !important;
-        font-weight: 600 !important;
-        margin: 1.5rem 0 1rem 0 !important;
+        color: #2d1b4e !important;
+        font-size: 1.35rem !important;
+        font-weight: 700 !important;
+        margin: 1.8rem 0 1.2rem 0 !important;
     }
     
-    /* Soft result container */
+    /* Defined result container */
     .result-container {
-        background: linear-gradient(135deg, #faf6ff 0%, #fff8fc 100%);
+        background: linear-gradient(135deg, #faf7ff 0%, #fff8fc 100%);
         border-radius: 20px;
         padding: 2rem;
         margin-top: 2rem;
-        border: 1px solid #ead9f3;
+        border: 2px solid #e6dff0;
         box-shadow: 0 4px 16px rgba(124, 82, 149, 0.1);
     }
     
-    /* Cute metrics */
+    /* Strong, readable metrics */
     [data-testid="stMetricValue"] {
-        font-size: 2rem !important;
+        font-size: 2.2rem !important;
         font-weight: 700 !important;
-        color: #7c5295 !important;
+        color: #2d1b4e !important;
     }
     
     [data-testid="stMetricLabel"] {
-        color: #9b8aa6 !important;
+        color: #5a4a6a !important;
         font-size: 0.9rem !important;
         font-weight: 600 !important;
         text-transform: uppercase;
@@ -143,139 +143,147 @@ st.markdown("""
     }
     
     [data-testid="stMetric"] {
-        background: rgba(255, 255, 255, 0.7);
+        background: #ffffff;
         padding: 1.5rem;
-        border-radius: 18px;
-        border: 1px solid rgba(212, 197, 224, 0.4);
-        box-shadow: 0 4px 12px rgba(124, 82, 149, 0.08);
+        border-radius: 16px;
+        border: 2px solid #e6dff0;
+        box-shadow: 0 2px 12px rgba(124, 82, 149, 0.08);
     }
     
-    /* Soft progress bars */
+    /* Clear progress bars with accent color */
     .stProgress > div > div > div > div {
-        background: linear-gradient(90deg, #d4a5e8 0%, #a8c0e8 100%);
+        background: linear-gradient(90deg, #8b5cf6 0%, #a78bfa 100%);
         border-radius: 10px;
     }
     
     .stProgress > div > div {
-        background-color: #f3ebf8;
+        background-color: #ede9f5;
         border-radius: 10px;
     }
     
     .stProgress {
-        height: 12px;
-        margin: 0.8rem 0;
+        height: 14px;
+        margin: 1rem 0;
     }
     
-    /* Soft info boxes */
+    /* Clear, distinct info boxes */
     .stInfo {
-        background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%);
-        border-left: 4px solid #90caf9;
-        color: #1e4d7b;
+        background: #e3f2fd;
+        border-left: 4px solid #1976d2;
+        color: #0d47a1;
         padding: 1.2rem;
-        border-radius: 15px;
+        border-radius: 12px;
         font-weight: 500;
-        box-shadow: 0 4px 12px rgba(144, 202, 249, 0.15);
-        border: 1px solid #bbdefb;
+        box-shadow: 0 2px 8px rgba(25, 118, 210, 0.12);
+        border: 1px solid #90caf9;
     }
     
     .stSuccess {
-        background: linear-gradient(135deg, #f1f8e9 0%, #f9fdf4 100%);
-        border-left: 4px solid #aed581;
-        color: #33691e;
+        background: #e8f5e9;
+        border-left: 4px solid #388e3c;
+        color: #1b5e20;
         padding: 1.2rem;
-        border-radius: 15px;
+        border-radius: 12px;
         font-weight: 500;
-        box-shadow: 0 4px 12px rgba(174, 213, 129, 0.15);
-        border: 1px solid #dcedc8;
+        box-shadow: 0 2px 8px rgba(56, 142, 60, 0.12);
+        border: 1px solid #81c784;
     }
     
     .stError {
-        background: linear-gradient(135deg, #fce4ec 0%, #fff4f7 100%);
-        border-left: 4px solid #f48fb1;
+        background: #fce4ec;
+        border-left: 4px solid #c2185b;
         color: #880e4f;
         padding: 1.2rem;
-        border-radius: 15px;
+        border-radius: 12px;
         font-weight: 500;
-        box-shadow: 0 4px 12px rgba(244, 143, 177, 0.15);
-        border: 1px solid #f8bbd0;
+        box-shadow: 0 2px 8px rgba(194, 24, 91, 0.12);
+        border: 1px solid #f06292;
     }
     
-    /* Soft image frame */
+    /* Clear image frame */
     [data-testid="stImage"] {
-        border-radius: 20px;
-        border: 1px solid #ead9f3;
-        box-shadow: 0 8px 24px rgba(124, 82, 149, 0.12);
+        border-radius: 16px;
+        border: 2px solid #e6dff0;
+        box-shadow: 0 4px 20px rgba(124, 82, 149, 0.12);
         overflow: hidden;
     }
     
-    /* Gentle divider */
+    /* Clear divider */
     hr {
         margin: 2rem 0;
         border: none;
-        height: 1px;
+        height: 2px;
         background: linear-gradient(90deg, transparent, #d4c5e0, transparent);
     }
     
-    /* Captions */
+    /* Readable captions */
     .stCaption {
-        color: #9b8aa6 !important;
+        color: #5a4a6a !important;
         font-weight: 500 !important;
         font-size: 0.9rem !important;
     }
     
-    /* Spinner */
+    /* Accent color spinner */
     .stSpinner > div {
-        border-top-color: #b9a5cc !important;
-        border-right-color: #d4c5e0 !important;
+        border-top-color: #8b5cf6 !important;
+        border-right-color: #a78bfa !important;
     }
     
-    /* Footer */
+    /* Clear footer */
     .footer {
         text-align: center;
-        color: #9b8aa6;
-        font-size: 0.85rem;
+        color: #5a4a6a;
+        font-size: 0.9rem;
         margin-top: 2.5rem;
         padding-top: 2rem;
         font-weight: 500;
-        border-top: 1px solid #ead9f3;
+        border-top: 2px solid #e6dff0;
     }
     
-    /* Emoji styling */
-    .emoji {
-        font-size: 1.2em;
-        vertical-align: middle;
-        margin: 0 0.2em;
-    }
-    
-    /* Smooth all transitions */
-    * {
-        transition: all 0.3s ease;
-    }
-    
-    /* Verdict styling */
-    .verdict-text {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-top: 1rem;
-    }
-    
-    /* Confidence badge */
+    /* Defined confidence badge */
     .confidence-badge {
         display: inline-block;
-        background: linear-gradient(135deg, #f3e8ff 0%, #ffe9f5 100%);
-        padding: 0.5rem 1.2rem;
-        border-radius: 20px;
+        background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+        padding: 0.6rem 1.4rem;
+        border-radius: 24px;
         font-weight: 600;
-        color: #7c5295;
+        color: #ffffff;
         margin-top: 0.5rem;
-        border: 1px solid #ead9f3;
-        box-shadow: 0 2px 8px rgba(124, 82, 149, 0.1);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+        font-size: 1rem;
     }
     
     /* Block container adjustments */
     .block-container {
         padding-top: 3rem;
         padding-bottom: 2rem;
+    }
+    
+    /* Smooth transitions */
+    * {
+        transition: all 0.3s ease;
+    }
+    
+    /* Better text contrast */
+    p {
+        color: #3d3d3d;
+        line-height: 1.6;
+    }
+    
+    /* Stronger write styling */
+    .stMarkdown {
+        color: #3d3d3d;
+    }
+    
+    /* Clear verdict section */
+    .verdict-section {
+        margin-top: 1.5rem;
+    }
+    
+    .verdict-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 0.8rem;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -294,9 +302,9 @@ def download_model_if_missing(local_path: str, url: str):
         with st.spinner("✨ Downloading model..."):
             try:
                 urllib.request.urlretrieve(url, local_path)
-                st.success("🎉 Model ready!")
+                st.success("Model downloaded successfully!")
             except Exception as e:
-                st.error(f"Unable to download model: {str(e)}")
+                st.error(f"Failed to download model: {str(e)}")
                 raise
     else:
         raise FileNotFoundError(f"Model not found at {local_path} and no valid MODEL_URL provided.")
@@ -304,7 +312,7 @@ def download_model_if_missing(local_path: str, url: str):
 try:
     download_model_if_missing(MODEL_PATH, MODEL_URL)
 except Exception:
-    st.error("⚠️ Model is missing and couldn't be downloaded.")
+    st.error("Model is missing and could not be downloaded.")
     st.stop()
 
 # Build model
@@ -339,12 +347,12 @@ def predict(img: Image.Image) -> float:
     return prob
 
 # ---------------------------
-# Cute Streamlit UI
+# Clean, Professional, Cute UI
 # ---------------------------
 
 # Header
 st.markdown("<h1>✨ AI Image Detector</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>Discover whether your image is AI-generated or real with gentle precision 🌸</p>", unsafe_allow_html=True)
+st.markdown("<p class='subtitle'>Discover if your image is AI-generated or real with precision and care</p>", unsafe_allow_html=True)
 
 # Main container
 st.markdown("<div class='main-container'>", unsafe_allow_html=True)
@@ -352,7 +360,7 @@ st.markdown("<div class='main-container'>", unsafe_allow_html=True)
 uploaded = st.file_uploader(
     "📸 Upload your image",
     type=["jpg", "jpeg", "png"],
-    help="Supports JPG, JPEG, and PNG formats"
+    help="Supports JPG, JPEG, and PNG formats • Max 200MB"
 )
 
 if uploaded:
@@ -363,7 +371,7 @@ if uploaded:
     st.image(img, use_column_width=True)
     
     # Analyze
-    with st.spinner("🔍 Analyzing with care..."):
+    with st.spinner("🔍 Analyzing your image..."):
         try:
             prob_fake = predict(img)
             prob_real = 1 - prob_fake
@@ -389,7 +397,7 @@ if uploaded:
                 )
             
             # Progress bars
-            st.markdown("### 💫 Confidence Levels")
+            st.markdown("### 💫 Confidence Breakdown")
             st.caption(f"AI-Generated: {prob_fake*100:.1f}%")
             st.progress(prob_fake)
             
@@ -401,31 +409,35 @@ if uploaded:
             # Verdict
             st.markdown("---")
             
+            st.markdown("<div class='verdict-section'>", unsafe_allow_html=True)
+            
             if prob_fake > 0.5:
                 confidence = (prob_fake - 0.5) * 200
-                st.error("### 🤖 Verdict: AI-Generated")
+                st.error("**Verdict: AI-Generated Image**")
                 st.markdown(f"<div class='confidence-badge'>Confidence: {confidence:.1f}%</div>", unsafe_allow_html=True)
                 st.write("")
-                st.caption("This image appears to be created by artificial intelligence")
+                st.write("This image appears to be created by artificial intelligence.")
             else:
                 confidence = (prob_real - 0.5) * 200
-                st.success("### ✨ Verdict: Real Photograph")
+                st.success("**Verdict: Real Photograph**")
                 st.markdown(f"<div class='confidence-badge'>Confidence: {confidence:.1f}%</div>", unsafe_allow_html=True)
                 st.write("")
-                st.caption("This image appears to be a genuine photograph")
+                st.write("This image appears to be a genuine photograph.")
+            
+            st.markdown("</div>", unsafe_allow_html=True)
             
         except Exception as e:
-            st.error(f"Analysis encountered an issue: {str(e)}")
+            st.error(f"Analysis failed: {str(e)}")
 else:
-    st.info("💝 Upload an image to begin your analysis")
+    st.info("💝 Upload an image to begin analysis")
 
 st.markdown("</div>", unsafe_allow_html=True)
 
 # Footer
 st.markdown(
     "<div class='footer'>"
-    "Powered by ResNet-18 Neural Network 🧠<br>"
-    "Built with love using Streamlit 💜"
+    "Powered by ResNet-18 Neural Network<br>"
+    "Built with Streamlit"
     "</div>",
     unsafe_allow_html=True
 )
