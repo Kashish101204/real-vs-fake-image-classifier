@@ -33,127 +33,171 @@ from torchvision import transforms, models
 st.set_page_config(
     page_title="AI Image Detector",
     page_icon="🔍",
-    layout="wide",
+    layout="centered",
     initial_sidebar_state="collapsed"
 )
 
 # ---------------------------
-# Custom CSS for modern styling
+# Clean, minimal CSS styling
 # ---------------------------
 st.markdown("""
 <style>
-    /* Main background gradient */
+    /* Clean background */
     .stApp {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-color: #fafafa;
     }
     
-    /* Header styling */
+    /* Typography */
     h1 {
-        font-size: 3.5rem !important;
-        font-weight: 800 !important;
-        text-align: center;
-        background: linear-gradient(120deg, #ffffff, #e0e7ff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: #1a1a1a;
+        font-size: 2rem !important;
+        font-weight: 600 !important;
         margin-bottom: 0.5rem !important;
-        text-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        letter-spacing: -0.02em;
     }
     
-    /* Subtitle styling */
+    h2 {
+        color: #2d3748;
+        font-size: 1.25rem !important;
+        font-weight: 600 !important;
+        margin-top: 2rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    h3 {
+        color: #4a5568;
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    p {
+        color: #4a5568;
+        line-height: 1.6;
+    }
+    
+    /* Subtitle */
     .subtitle {
-        text-align: center;
-        color: #ffffff;
-        font-size: 1.2rem;
+        color: #718096;
+        font-size: 1rem;
         margin-bottom: 3rem;
-        font-weight: 400;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        line-height: 1.5;
     }
     
-    /* Card container */
-    .upload-card {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 3rem;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        margin: 2rem auto;
-        max-width: 800px;
+    /* Main container */
+    .main-container {
+        background: white;
+        border-radius: 8px;
+        padding: 2.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        margin: 2rem 0;
     }
     
-    /* File uploader styling */
+    /* File uploader */
     .stFileUploader {
-        background: rgba(255, 255, 255, 0.98);
-        border-radius: 15px;
+        background: #f7fafc;
+        border: 2px dashed #cbd5e0;
+        border-radius: 8px;
         padding: 2rem;
-        border: 3px dashed #667eea;
-        transition: all 0.3s ease;
     }
     
-    .stFileUploader:hover {
-        border-color: #764ba2;
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
-    }
-    
-    /* File uploader text */
     .stFileUploader label {
         color: #2d3748 !important;
-        font-weight: 600 !important;
+        font-weight: 500 !important;
+        font-size: 0.95rem !important;
     }
     
-    .stFileUploader [data-testid="stMarkdownContainer"] p {
-        color: #4a5568 !important;
+    .stFileUploader [data-testid="stMarkdownContainer"] {
+        color: #718096 !important;
     }
     
-    /* Result card */
-    .result-card {
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
-        border-radius: 15px;
-        padding: 2rem;
+    /* Result section */
+    .result-container {
+        background: #f7fafc;
+        border-radius: 8px;
+        padding: 1.5rem;
         margin-top: 2rem;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-    
-    /* Progress bars */
-    .stProgress > div > div > div > div {
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        border: 1px solid #e2e8f0;
     }
     
     /* Metrics */
     [data-testid="stMetricValue"] {
-        font-size: 2rem !important;
-        font-weight: 700 !important;
+        font-size: 1.5rem !important;
+        font-weight: 600 !important;
+        color: #2d3748 !important;
     }
     
-    /* Success/Error messages */
-    .stSuccess, .stError {
-        border-radius: 10px;
+    [data-testid="stMetricLabel"] {
+        color: #718096 !important;
+        font-size: 0.875rem !important;
+        font-weight: 500 !important;
+    }
+    
+    [data-testid="stMetricDelta"] {
+        font-size: 0.8rem !important;
+    }
+    
+    /* Progress bars */
+    .stProgress > div > div > div > div {
+        background-color: #4299e1;
+    }
+    
+    .stProgress {
+        margin: 0.5rem 0;
+    }
+    
+    /* Info/Success/Error boxes */
+    .stInfo {
+        background-color: #ebf8ff;
+        border-left: 4px solid #4299e1;
+        color: #2c5282;
         padding: 1rem;
-        font-weight: 500;
+        border-radius: 4px;
     }
     
-    /* Image display */
+    .stSuccess {
+        background-color: #f0fff4;
+        border-left: 4px solid #48bb78;
+        color: #22543d;
+        padding: 1rem;
+        border-radius: 4px;
+    }
+    
+    .stError {
+        background-color: #fff5f5;
+        border-left: 4px solid #f56565;
+        color: #742a2a;
+        padding: 1rem;
+        border-radius: 4px;
+    }
+    
+    /* Image */
     [data-testid="stImage"] {
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
     }
     
-    /* Button styling */
-    .stButton > button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
+    /* Divider */
+    hr {
+        margin: 2rem 0;
         border: none;
-        border-radius: 10px;
-        padding: 0.75rem 2rem;
-        font-weight: 600;
-        transition: all 0.3s ease;
+        border-top: 1px solid #e2e8f0;
     }
     
-    .stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    /* Remove extra padding */
+    .block-container {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+    
+    /* Footer */
+    .footer {
+        text-align: center;
+        color: #a0aec0;
+        font-size: 0.875rem;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e2e8f0;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -169,12 +213,12 @@ def download_model_if_missing(local_path: str, url: str):
     if os.path.exists(local_path):
         return
     if url.startswith("http"):
-        with st.spinner("🔄 Downloading AI model... This may take a moment."):
+        with st.spinner("Downloading model..."):
             try:
                 urllib.request.urlretrieve(url, local_path)
-                st.success("✅ Model downloaded successfully!")
+                st.success("Model downloaded successfully")
             except Exception as e:
-                st.error(f"❌ Failed to download model: {str(e)}")
+                st.error(f"Failed to download model: {str(e)}")
                 raise
     else:
         raise FileNotFoundError(f"Model not found at {local_path} and no valid MODEL_URL provided.")
@@ -182,7 +226,7 @@ def download_model_if_missing(local_path: str, url: str):
 try:
     download_model_if_missing(MODEL_PATH, MODEL_URL)
 except Exception:
-    st.error("⚠️ Model missing and could not be downloaded. Upload model file to the repo or set MODEL_URL.")
+    st.error("Model missing and could not be downloaded. Upload model file to the repo or set MODEL_URL.")
     st.stop()
 
 # Build model
@@ -192,7 +236,7 @@ model.fc = nn.Linear(model.fc.in_features, 1)
 try:
     model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE))
 except Exception as e:
-    st.error(f"❌ Error loading model file '{MODEL_PATH}': {e}")
+    st.error(f"Error loading model file '{MODEL_PATH}': {e}")
     st.stop()
 
 model = model.to(DEVICE)
@@ -219,85 +263,88 @@ def predict(img: Image.Image) -> float:
 # ---------------------------
 # Streamlit UI
 # ---------------------------
-st.markdown("<h1>🔍 AI Image Detector</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>Advanced neural network powered detection • Distinguish real from AI-generated imagery</p>", unsafe_allow_html=True)
 
-# Create centered column layout
-col1, col2, col3 = st.columns([1, 3, 1])
+# Header
+st.title("AI Image Detector")
+st.markdown("<p class='subtitle'>Detect whether an image is AI-generated or real using deep learning analysis</p>", unsafe_allow_html=True)
 
-with col2:
-    st.markdown("<div class='upload-card'>", unsafe_allow_html=True)
+# Main content container
+st.markdown("<div class='main-container'>", unsafe_allow_html=True)
+
+uploaded = st.file_uploader(
+    "Upload an image",
+    type=["jpg", "jpeg", "png"],
+    help="Supported formats: JPG, JPEG, PNG"
+)
+
+if uploaded:
+    img = Image.open(uploaded).convert("RGB")
     
-    uploaded = st.file_uploader(
-        "Drop your image here or click to browse",
-        type=["jpg", "jpeg", "png"],
-        help="Supports JPG, JPEG, and PNG formats"
-    )
+    # Display uploaded image
+    st.markdown("### Uploaded Image")
+    st.image(img, use_column_width=True)
     
-    if uploaded:
-        img = Image.open(uploaded).convert("RGB")
-        
-        st.markdown("### 📸 Uploaded Image")
-        st.image(img, use_column_width=True)
-        
-        with st.spinner("🤖 Analyzing image with AI..."):
-            try:
-                prob_fake = predict(img)
-                prob_real = 1 - prob_fake
-                
-                st.markdown("<div class='result-card'>", unsafe_allow_html=True)
-                
-                st.markdown("### 📊 Detection Results")
-                
-                # Display metrics in columns
-                metric_col1, metric_col2 = st.columns(2)
-                
-                with metric_col1:
-                    st.metric(
-                        label="🎨 AI-Generated",
-                        value=f"{prob_fake*100:.1f}%",
-                        delta=f"{(prob_fake - 0.5)*100:.1f}% vs threshold" if prob_fake != 0.5 else None
-                    )
-                
-                with metric_col2:
-                    st.metric(
-                        label="📷 Real Photo",
-                        value=f"{prob_real*100:.1f}%",
-                        delta=f"{(prob_real - 0.5)*100:.1f}% vs threshold" if prob_real != 0.5 else None
-                    )
-                
-                # Visual probability bars
-                st.markdown("#### Confidence Breakdown")
-                st.progress(prob_fake, text=f"AI-Generated: {prob_fake*100:.1f}%")
-                st.progress(prob_real, text=f"Real Photo: {prob_real*100:.1f}%")
-                
-                # Final verdict
-                st.markdown("---")
-                if prob_fake > 0.5:
-                    confidence = (prob_fake - 0.5) * 200
-                    st.error(f"### 🤖 Verdict: AI-Generated Image")
-                    st.write(f"Confidence level: **{confidence:.1f}%**")
-                    st.write("This image appears to be created by artificial intelligence.")
-                else:
-                    confidence = (prob_real - 0.5) * 200
-                    st.success(f"### ✅ Verdict: Real Photograph")
-                    st.write(f"Confidence level: **{confidence:.1f}%**")
-                    st.write("This image appears to be a genuine photograph.")
-                
-                st.markdown("</div>", unsafe_allow_html=True)
-                
-            except Exception as e:
-                st.error(f"⚠️ Prediction failed: {str(e)}")
-    else:
-        st.info("👆 **Upload an image to begin analysis**")
-    
-    st.markdown("</div>", unsafe_allow_html=True)
+    # Run prediction
+    with st.spinner("Analyzing image..."):
+        try:
+            prob_fake = predict(img)
+            prob_real = 1 - prob_fake
+            
+            st.markdown("<div class='result-container'>", unsafe_allow_html=True)
+            
+            # Results header
+            st.markdown("### Detection Results")
+            
+            # Metrics
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.metric(
+                    label="AI-Generated",
+                    value=f"{prob_fake*100:.1f}%"
+                )
+            
+            with col2:
+                st.metric(
+                    label="Real Photo",
+                    value=f"{prob_real*100:.1f}%"
+                )
+            
+            # Confidence visualization
+            st.markdown("#### Confidence Breakdown")
+            st.caption(f"AI-Generated: {prob_fake*100:.1f}%")
+            st.progress(prob_fake)
+            
+            st.caption(f"Real Photo: {prob_real*100:.1f}%")
+            st.progress(prob_real)
+            
+            st.markdown("</div>", unsafe_allow_html=True)
+            
+            # Final verdict
+            st.markdown("---")
+            
+            if prob_fake > 0.5:
+                confidence = (prob_fake - 0.5) * 200
+                st.error("**Verdict: AI-Generated Image**")
+                st.write(f"Confidence: {confidence:.1f}%")
+                st.caption("This image appears to be created by artificial intelligence.")
+            else:
+                confidence = (prob_real - 0.5) * 200
+                st.success("**Verdict: Real Photograph**")
+                st.write(f"Confidence: {confidence:.1f}%")
+                st.caption("This image appears to be a genuine photograph.")
+            
+        except Exception as e:
+            st.error(f"Prediction failed: {str(e)}")
+else:
+    st.info("Please upload an image to begin analysis")
+
+st.markdown("</div>", unsafe_allow_html=True)
 
 # Footer
-st.markdown("---")
 st.markdown(
-    "<p style='text-align: center; color: #ffffff; font-size: 0.9rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3);'>"
-    "Powered by ResNet-18 Deep Learning Model • Built with ❤️ using Streamlit"
-    "</p>",
+    "<div class='footer'>"
+    "Powered by ResNet-18 Deep Learning Model"
+    "</div>",
     unsafe_allow_html=True
 )
