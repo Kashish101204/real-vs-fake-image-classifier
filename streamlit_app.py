@@ -84,29 +84,47 @@ st.markdown("""
     
     /* Clear, distinct file uploader */
     .stFileUploader {
-        background: linear-gradient(135deg, #9b7ab8 0%, #8b75a8 100%);
-        border: 3px dashed #6f5b87;
+        background: linear-gradient(135deg, #e6dff0 0%, #f0e8f5 100%);
+        border: 3px dashed #8b75a8;
         border-radius: 16px;
         padding: 2.5rem;
         transition: all 0.3s ease;
     }
     
     .stFileUploader:hover {
-        background: linear-gradient(135deg, #8b6aa8 0%, #7c5ba3 100%);
-        border-color: #5a4670;
+        background: linear-gradient(135deg, #ddd4ea 0%, #e8deef 100%);
+        border-color: #6f5b87;
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(45, 27, 78, 0.3);
+        box-shadow: 0 8px 24px rgba(45, 27, 78, 0.2);
     }
     
     .stFileUploader label {
-        color: #ffffff !important;
+        color: #1a0f2e !important;
         font-weight: 600 !important;
         font-size: 1.05rem !important;
     }
     
     .stFileUploader [data-testid="stMarkdownContainer"] {
-        color: #e6dff0 !important;
+        color: #3d2f4f !important;
         font-weight: 500 !important;
+    }
+    
+    /* Inner drag and drop box */
+    .stFileUploader section[data-testid="stFileUploadDropzone"] {
+        background: linear-gradient(135deg, #7c5ba3 0%, #8b75a8 100%) !important;
+        border: 2px dashed #5a4670 !important;
+        border-radius: 12px !important;
+    }
+    
+    .stFileUploader section[data-testid="stFileUploadDropzone"] button {
+        color: #ffffff !important;
+        background: rgba(0, 0, 0, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    }
+    
+    .stFileUploader section[data-testid="stFileUploadDropzone"] span,
+    .stFileUploader section[data-testid="stFileUploadDropzone"] small {
+        color: #ffffff !important;
     }
     
     /* Clear section headers */
