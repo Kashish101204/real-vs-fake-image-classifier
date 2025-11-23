@@ -17,7 +17,7 @@ from PIL import Image
 # Load trained model
 # -------------------------------------
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-MODEL_PATH = "best_model.pth"    # Make sure this file is in the same folder
+MODEL_PATH = "best_model_small.pth"    # Make sure this file is in the same folder
 
 model = models.resnet18(weights=None)
 model.fc = nn.Linear(model.fc.in_features, 1)
