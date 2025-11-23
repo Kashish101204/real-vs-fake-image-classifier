@@ -63,10 +63,11 @@ st.markdown("""
     /* Subtitle styling */
     .subtitle {
         text-align: center;
-        color: #e0e7ff;
+        color: #ffffff;
         font-size: 1.2rem;
         margin-bottom: 3rem;
-        font-weight: 300;
+        font-weight: 400;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
     
     /* Card container */
@@ -82,7 +83,7 @@ st.markdown("""
     
     /* File uploader styling */
     .stFileUploader {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: rgba(255, 255, 255, 0.98);
         border-radius: 15px;
         padding: 2rem;
         border: 3px dashed #667eea;
@@ -93,6 +94,16 @@ st.markdown("""
         border-color: #764ba2;
         transform: translateY(-2px);
         box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+    }
+    
+    /* File uploader text */
+    .stFileUploader label {
+        color: #2d3748 !important;
+        font-weight: 600 !important;
+    }
+    
+    .stFileUploader [data-testid="stMarkdownContainer"] p {
+        color: #4a5568 !important;
     }
     
     /* Result card */
@@ -278,14 +289,14 @@ with col2:
             except Exception as e:
                 st.error(f"⚠️ Prediction failed: {str(e)}")
     else:
-        st.info("👆 Upload an image to begin analysis")
+        st.info("👆 **Upload an image to begin analysis**")
     
     st.markdown("</div>", unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
 st.markdown(
-    "<p style='text-align: center; color: #e0e7ff; font-size: 0.9rem;'>"
+    "<p style='text-align: center; color: #ffffff; font-size: 0.9rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3);'>"
     "Powered by ResNet-18 Deep Learning Model • Built with ❤️ using Streamlit"
     "</p>",
     unsafe_allow_html=True
