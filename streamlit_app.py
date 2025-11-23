@@ -32,27 +32,27 @@ from torchvision import transforms, models
 # ---------------------------
 st.set_page_config(
     page_title="AI Image Detector",
-    page_icon="✨",
+    page_icon="🔍",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
 
 # ---------------------------
-# Clean, Professional, Cute CSS with High Contrast
+# Dark Pastel, No Emoji CSS
 # ---------------------------
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
-    /* Soft but clear background */
+    /* Darker pastel background */
     .stApp {
-        background: linear-gradient(135deg, #f8f4ff 0%, #fff9f5 100%);
+        background: linear-gradient(135deg, #d4c4e0 0%, #e8d9d0 100%);
         font-family: 'Inter', sans-serif;
     }
     
     /* Strong, readable title */
     h1 {
-        color: #2d1b4e;
+        color: #1a0f2e;
         font-size: 2.5rem !important;
         font-weight: 700 !important;
         text-align: center;
@@ -63,7 +63,7 @@ st.markdown("""
     /* Clear subtitle */
     .subtitle {
         text-align: center;
-        color: #5a4a6a;
+        color: #3d2f4f;
         font-size: 1.05rem;
         margin-bottom: 2.5rem;
         font-weight: 500;
@@ -72,46 +72,46 @@ st.markdown("""
     
     /* Premium card with strong structure */
     .main-container {
-        background: #ffffff;
+        background: #f5f0f7;
         border-radius: 24px;
         padding: 2.5rem;
-        box-shadow: 0 4px 24px rgba(124, 82, 149, 0.12),
-                    0 1px 4px rgba(124, 82, 149, 0.08);
+        box-shadow: 0 4px 24px rgba(45, 27, 78, 0.15),
+                    0 1px 4px rgba(45, 27, 78, 0.1);
         margin: 2rem auto;
-        border: 2px solid #f0ebf5;
+        border: 2px solid #d9cfe3;
         max-width: 700px;
     }
     
     /* Clear, distinct file uploader */
     .stFileUploader {
-        background: linear-gradient(135deg, #faf7ff 0%, #fff8fc 100%);
-        border: 3px dashed #b794d6;
+        background: linear-gradient(135deg, #e6dff0 0%, #f0e8f5 100%);
+        border: 3px dashed #8b75a8;
         border-radius: 16px;
         padding: 2.5rem;
         transition: all 0.3s ease;
     }
     
     .stFileUploader:hover {
-        background: linear-gradient(135deg, #f3edff 0%, #fff0f9 100%);
-        border-color: #9371c7;
+        background: linear-gradient(135deg, #ddd4ea 0%, #e8deef 100%);
+        border-color: #6f5b87;
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(124, 82, 149, 0.15);
+        box-shadow: 0 8px 24px rgba(45, 27, 78, 0.2);
     }
     
     .stFileUploader label {
-        color: #2d1b4e !important;
+        color: #1a0f2e !important;
         font-weight: 600 !important;
         font-size: 1.05rem !important;
     }
     
     .stFileUploader [data-testid="stMarkdownContainer"] {
-        color: #5a4a6a !important;
+        color: #3d2f4f !important;
         font-weight: 500 !important;
     }
     
     /* Clear section headers */
     h3 {
-        color: #2d1b4e !important;
+        color: #1a0f2e !important;
         font-size: 1.35rem !important;
         font-weight: 700 !important;
         margin: 1.8rem 0 1.2rem 0 !important;
@@ -119,23 +119,23 @@ st.markdown("""
     
     /* Defined result container */
     .result-container {
-        background: linear-gradient(135deg, #faf7ff 0%, #fff8fc 100%);
+        background: linear-gradient(135deg, #e6dff0 0%, #f0e8f5 100%);
         border-radius: 20px;
         padding: 2rem;
         margin-top: 2rem;
-        border: 2px solid #e6dff0;
-        box-shadow: 0 4px 16px rgba(124, 82, 149, 0.1);
+        border: 2px solid #c9b9d9;
+        box-shadow: 0 4px 16px rgba(45, 27, 78, 0.12);
     }
     
     /* Strong, readable metrics */
     [data-testid="stMetricValue"] {
         font-size: 2.2rem !important;
         font-weight: 700 !important;
-        color: #2d1b4e !important;
+        color: #1a0f2e !important;
     }
     
     [data-testid="stMetricLabel"] {
-        color: #5a4a6a !important;
+        color: #3d2f4f !important;
         font-size: 0.9rem !important;
         font-weight: 600 !important;
         text-transform: uppercase;
@@ -143,21 +143,21 @@ st.markdown("""
     }
     
     [data-testid="stMetric"] {
-        background: #ffffff;
+        background: #f5f0f7;
         padding: 1.5rem;
         border-radius: 16px;
-        border: 2px solid #e6dff0;
-        box-shadow: 0 2px 12px rgba(124, 82, 149, 0.08);
+        border: 2px solid #d9cfe3;
+        box-shadow: 0 2px 12px rgba(45, 27, 78, 0.1);
     }
     
-    /* Clear progress bars with accent color */
+    /* Clear progress bars with darker accent */
     .stProgress > div > div > div > div {
-        background: linear-gradient(90deg, #8b5cf6 0%, #a78bfa 100%);
+        background: linear-gradient(90deg, #7c5ba3 0%, #9b7ab8 100%);
         border-radius: 10px;
     }
     
     .stProgress > div > div {
-        background-color: #ede9f5;
+        background-color: #d9cfe3;
         border-radius: 10px;
     }
     
@@ -168,43 +168,43 @@ st.markdown("""
     
     /* Clear, distinct info boxes */
     .stInfo {
-        background: #e3f2fd;
-        border-left: 4px solid #1976d2;
-        color: #0d47a1;
+        background: #c4d9e8;
+        border-left: 4px solid #5981a8;
+        color: #1a3a52;
         padding: 1.2rem;
         border-radius: 12px;
         font-weight: 500;
-        box-shadow: 0 2px 8px rgba(25, 118, 210, 0.12);
-        border: 1px solid #90caf9;
+        box-shadow: 0 2px 8px rgba(89, 129, 168, 0.15);
+        border: 1px solid #91b5cf;
     }
     
     .stSuccess {
-        background: #e8f5e9;
-        border-left: 4px solid #388e3c;
-        color: #1b5e20;
+        background: #c9dfc9;
+        border-left: 4px solid #5f8f5f;
+        color: #1f3a1f;
         padding: 1.2rem;
         border-radius: 12px;
         font-weight: 500;
-        box-shadow: 0 2px 8px rgba(56, 142, 60, 0.12);
-        border: 1px solid #81c784;
+        box-shadow: 0 2px 8px rgba(95, 143, 95, 0.15);
+        border: 1px solid #8fb98f;
     }
     
     .stError {
-        background: #fce4ec;
-        border-left: 4px solid #c2185b;
-        color: #880e4f;
+        background: #e6c9d6;
+        border-left: 4px solid #a85980;
+        color: #3d1a2e;
         padding: 1.2rem;
         border-radius: 12px;
         font-weight: 500;
-        box-shadow: 0 2px 8px rgba(194, 24, 91, 0.12);
-        border: 1px solid #f06292;
+        box-shadow: 0 2px 8px rgba(168, 89, 128, 0.15);
+        border: 1px solid #c98fa8;
     }
     
     /* Clear image frame */
     [data-testid="stImage"] {
         border-radius: 16px;
-        border: 2px solid #e6dff0;
-        box-shadow: 0 4px 20px rgba(124, 82, 149, 0.12);
+        border: 2px solid #c9b9d9;
+        box-shadow: 0 4px 20px rgba(45, 27, 78, 0.15);
         overflow: hidden;
     }
     
@@ -213,43 +213,43 @@ st.markdown("""
         margin: 2rem 0;
         border: none;
         height: 2px;
-        background: linear-gradient(90deg, transparent, #d4c5e0, transparent);
+        background: linear-gradient(90deg, transparent, #9b7ab8, transparent);
     }
     
     /* Readable captions */
     .stCaption {
-        color: #5a4a6a !important;
+        color: #3d2f4f !important;
         font-weight: 500 !important;
         font-size: 0.9rem !important;
     }
     
     /* Accent color spinner */
     .stSpinner > div {
-        border-top-color: #8b5cf6 !important;
-        border-right-color: #a78bfa !important;
+        border-top-color: #7c5ba3 !important;
+        border-right-color: #9b7ab8 !important;
     }
     
     /* Clear footer */
     .footer {
         text-align: center;
-        color: #5a4a6a;
+        color: #3d2f4f;
         font-size: 0.9rem;
         margin-top: 2.5rem;
         padding-top: 2rem;
         font-weight: 500;
-        border-top: 2px solid #e6dff0;
+        border-top: 2px solid #c9b9d9;
     }
     
     /* Defined confidence badge */
     .confidence-badge {
         display: inline-block;
-        background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+        background: linear-gradient(135deg, #7c5ba3 0%, #9b7ab8 100%);
         padding: 0.6rem 1.4rem;
         border-radius: 24px;
         font-weight: 600;
         color: #ffffff;
         margin-top: 0.5rem;
-        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+        box-shadow: 0 4px 12px rgba(124, 91, 163, 0.3);
         font-size: 1rem;
     }
     
@@ -266,24 +266,18 @@ st.markdown("""
     
     /* Better text contrast */
     p {
-        color: #3d3d3d;
+        color: #2d2433;
         line-height: 1.6;
     }
     
     /* Stronger write styling */
     .stMarkdown {
-        color: #3d3d3d;
+        color: #2d2433;
     }
     
     /* Clear verdict section */
     .verdict-section {
         margin-top: 1.5rem;
-    }
-    
-    .verdict-title {
-        font-size: 1.3rem;
-        font-weight: 700;
-        margin-bottom: 0.8rem;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -299,7 +293,7 @@ def download_model_if_missing(local_path: str, url: str):
     if os.path.exists(local_path):
         return
     if url.startswith("http"):
-        with st.spinner("✨ Downloading model..."):
+        with st.spinner("Downloading model..."):
             try:
                 urllib.request.urlretrieve(url, local_path)
                 st.success("Model downloaded successfully!")
@@ -347,31 +341,31 @@ def predict(img: Image.Image) -> float:
     return prob
 
 # ---------------------------
-# Clean, Professional, Cute UI
+# Clean, Professional UI
 # ---------------------------
 
 # Header
-st.markdown("<h1>✨ AI Image Detector</h1>", unsafe_allow_html=True)
+st.markdown("<h1>AI Image Detector</h1>", unsafe_allow_html=True)
 st.markdown("<p class='subtitle'>Discover if your image is AI-generated or real with precision and care</p>", unsafe_allow_html=True)
 
 # Main container
 st.markdown("<div class='main-container'>", unsafe_allow_html=True)
 
 uploaded = st.file_uploader(
-    "📸 Upload your image",
+    "Upload your image",
     type=["jpg", "jpeg", "png"],
-    help="Supports JPG, JPEG, and PNG formats • Max 200MB"
+    help="Supports JPG, JPEG, and PNG formats"
 )
 
 if uploaded:
     img = Image.open(uploaded).convert("RGB")
     
     # Display image
-    st.markdown("### 🖼️ Your Image")
+    st.markdown("### Your Image")
     st.image(img, use_column_width=True)
     
     # Analyze
-    with st.spinner("🔍 Analyzing your image..."):
+    with st.spinner("Analyzing your image..."):
         try:
             prob_fake = predict(img)
             prob_real = 1 - prob_fake
@@ -379,25 +373,25 @@ if uploaded:
             st.markdown("<div class='result-container'>", unsafe_allow_html=True)
             
             # Results header
-            st.markdown("### 🎯 Detection Results")
+            st.markdown("### Detection Results")
             
             # Metrics
             col1, col2 = st.columns(2)
             
             with col1:
                 st.metric(
-                    label="🤖 AI-Generated",
+                    label="AI-Generated",
                     value=f"{prob_fake*100:.1f}%"
                 )
             
             with col2:
                 st.metric(
-                    label="📷 Real Photo",
+                    label="Real Photo",
                     value=f"{prob_real*100:.1f}%"
                 )
             
             # Progress bars
-            st.markdown("### 💫 Confidence Breakdown")
+            st.markdown("### Confidence Breakdown")
             st.caption(f"AI-Generated: {prob_fake*100:.1f}%")
             st.progress(prob_fake)
             
@@ -429,7 +423,7 @@ if uploaded:
         except Exception as e:
             st.error(f"Analysis failed: {str(e)}")
 else:
-    st.info("💝 Upload an image to begin analysis")
+    st.info("Upload an image to begin analysis")
 
 st.markdown("</div>", unsafe_allow_html=True)
 
