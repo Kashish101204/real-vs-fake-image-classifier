@@ -1,28 +1,11 @@
 # streamlit_app.py
 import os
-import sys
-import subprocess
-import importlib
 import urllib.request
 from pathlib import Path
 from PIL import Image
 import streamlit as st
 
-# ---------------------------
-# Helper: ensure torch + torchvision available at runtime
-# ---------------------------
-def ensure_packages():
-    try:
-        import torch, torchvision
-        return
-    except Exception:
-        subprocess.check_call([sys.executable, "-m", "pip", "install",
-                               "torch==2.9.1", "torchvision==0.16.1",
-                               "-f", "https://download.pytorch.org/whl/torch_stable.html"])
-        importlib.invalidate_caches()
-
-ensure_packages()
-
+# Torch is now expected to be installed via requirements.txt
 import torch
 import torch.nn as nn
 from torchvision import transforms, models
@@ -305,7 +288,7 @@ st.markdown("""
 # ---------------------------
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 MODEL_PATH = "best_model_small.pth"
-MODEL_URL = "https://raw.githubusercontent.com/<username>/<repo>/main/path/to/best_model_small.pth"
+MODEL_URL = "https://raw.githubusercontent.com/Kashish101204/real-vs-fake-image-classifier/main/best_model_small.pth"
 
 def download_model_if_missing(local_path: str, url: str):
     if os.path.exists(local_path):
@@ -319,7 +302,9 @@ def download_model_if_missing(local_path: str, url: str):
                 st.error(f"Failed to download model: {str(e)}")
                 raise
     else:
-        raise FileNotFoundError(f"Model not found at {local_path} and no valid MODEL_URL provided.")
+        raise FileNotFoundError(
+            f"Model not found at {local_path} and no valid MODEL_URL provided."
+        )
 
 try:
     download_model_if_missing(MODEL_PATH, MODEL_URL)
@@ -364,7 +349,10 @@ def predict(img: Image.Image) -> float:
 
 # Header
 st.markdown("<h1>AI Image Detector</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>Discover if your image is AI-generated or real with precision and care</p>", unsafe_allow_html=True)
+st.markdown(
+    "<p class='subtitle'>Discover if your image is AI-generated or real with precision and care</p>",
+    unsafe_allow_html=True
+)
 
 # Main container
 st.markdown("<div class='main-container'>", unsafe_allow_html=True)
@@ -426,13 +414,19 @@ if uploaded:
             if prob_fake > 0.5:
                 confidence = (prob_fake - 0.5) * 200
                 st.error("**Verdict: AI-Generated Image**")
-                st.markdown(f"<div class='confidence-badge'>Confidence: {confidence:.1f}%</div>", unsafe_allow_html=True)
+                st.markdown(
+                    f"<div class='confidence-badge'>Confidence: {confidence:.1f}%</div>",
+                    unsafe_allow_html=True
+                )
                 st.write("")
                 st.write("This image appears to be created by artificial intelligence.")
             else:
                 confidence = (prob_real - 0.5) * 200
                 st.success("**Verdict: Real Photograph**")
-                st.markdown(f"<div class='confidence-badge'>Confidence: {confidence:.1f}%</div>", unsafe_allow_html=True)
+                st.markdown(
+                    f"<div class='confidence-badge'>Confidence: {confidence:.1f}%</div>",
+                    unsafe_allow_html=True
+                )
                 st.write("")
                 st.write("This image appears to be a genuine photograph.")
             
